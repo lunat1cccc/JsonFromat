@@ -3,70 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>String to JSON Converter</title>
+    <title>Navigation Page</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        #input{
-            width: 100%;
-            height: 200px;
-            margin-bottom: 10px;
+        h1 {
+            margin-bottom: 20px;
         }
-        #output{
-            width: 100%;
-            height: 300px;
-            margin-bottom: 10px;
-        }
-        button {
-            display: block;
-            width: 100%;
+        .nav-button {
+            width: 200px;
             padding: 10px;
-            margin-bottom: 10px;
+            margin: 10px;
             background-color: #4CAF50;
             color: white;
             border: none;
             cursor: pointer;
+            text-align: center;
+            border-radius: 5px;
         }
-        button:hover {
+        .nav-button:hover {
             background-color: #45a049;
-        }
-        .error {
-            color: red;
-            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-    <h1>String to JSON Converter</h1>
-
-    <textarea id="input" placeholder="Enter your string here..."></textarea>
-    <button onclick="convertToJson()">Convert to JSON</button>
-    <div id="error-message" class="error"></div>
-    <textarea id="output" placeholder="JSON output will appear here..." readonly></textarea>
-
-    <script>
-        function convertToJson() {
-            const input = document.getElementById('input').value;
-            const errorMessage = document.getElementById('error-message');
-            let jsonOutput;
-
-            try {
-                // Try to parse the input as JSON
-                const parsedInput = JSON.parse(input);
-                jsonOutput = JSON.stringify(parsedInput, null, 2);
-                errorMessage.textContent = ''; // Clear any previous error messages
-            } catch (e) {
-                // If parsing fails, show error message
-                errorMessage.textContent = 'Conversion failed, please check your input content.';
-                jsonOutput = '';
-            }
-
-            document.getElementById('output').value = jsonOutput;
-        }
-    </script>
+    <h1>Navigation Page</h1>
+    <button class="nav-button" onclick="location.href='JsonConverter.html'">JSON Formatter</button>
+    <button class="nav-button" onclick="location.href='Base64.html'">Base64 Encoder/Decoder</button>
 
 </body>
 </html>

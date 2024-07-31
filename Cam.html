@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screen Recorder with Audio</title>
+</head>
+<body>
+    <h1>Screen Recorder with Audio</h1>
+    <button id="startButton">Start Recording</button>
+    <button id="stopButton" disabled>Stop Recording</button>
+    <video id="recordedVideo" controls></video>
+    <script>
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+        const recordedVideo = document.getElementById('recordedVideo');
+
+        let mediaRecorder;
+        let recordedChunks = [];
+
+        startButton.addEventListener('click', async () => {
+            startButton.disabled = true;
+            stopButton.disabled = false;
+
+            const displayStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+            const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+            const combinedStream = new MediaStream([...displayStream.getTracks(), ...audioStream.getTracks()]);
+
+            mediaRecorder = new MediaRecorder(combinedStream, { mimeType: 'video/webm' });
+
+            mediaRecorder.ondataavailable = event => {
+                if (event.data.size > 0) {
+                    recordedChunks.push(event.data);
+                }
+            };
+
+            mediaRecorder.onstop = () => {
+                const blob = new Blob(recordedChunks, { type: 'video/webm' });
+                recordedChunks = [];
+                const url = URL.createObjectURL(blob);
+                recordedVideo.src = url;
+                recordedVideo.play();
+            };
+
+            mediaRecorder.start();
+        });
+
+        stopButton.addEventListener('click', () => {
+            startButton.disabled = false;
+            stopButton.disabled = true;
+            mediaRecorder.stop();
+        });
+    </script>
+</body>
+</html>

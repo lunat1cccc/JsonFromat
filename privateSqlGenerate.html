@@ -53,7 +53,7 @@
             for (let i = 0; i < messageIDs.length; i += batchSize) {
                 const batch = messageIDs.slice(i, i + batchSize);
                 const formattedBatch = batch.join(',');
-                const sql = `DELETE FROM YourTable WHERE MessageID IN (${formattedBatch})`;
+                const sql = `DELETE FROM Inbox WHERE MessageID IN (${formattedBatch})`;
                 const statementNumber = (i / batchSize) + 1; // 计算当前语句的编号
 
                 sqlOutput += `<div class="sql-statement">

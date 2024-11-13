@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MessageID SQL 生成器</title>
+    <title>MessageID SQL Generate</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -37,10 +37,10 @@
     </style>
 </head>
 <body>
-    <h1>MessageID SQL 生成器</h1>
-    <textarea id="messageIDs" placeholder="在此输入 MessageID（每行一个）"></textarea>
-    <button id="generateSQL">生成 SQL</button>
-    <h2>生成的 SQL 语句</h2>
+    <h1>MessageID SQL Generate</h1>
+    <textarea id="messageIDs" placeholder="input MessageID perLine one id"></textarea>
+    <button id="generateSQL">Generate SQL</button>
+    <h2>Generated SQL</h2>
     <div id="sqlOutput"></div>
 
     <script>
@@ -54,20 +54,23 @@
                 const batch = messageIDs.slice(i, i + batchSize);
                 const formattedBatch = batch.join(',');
                 const sql = `DELETE FROM YourTable WHERE MessageID IN (${formattedBatch})`;
+                const statementNumber = (i / batchSize) + 1; // 计算当前语句的编号
+
                 sqlOutput += `<div class="sql-statement">
-                                ${sql}
-                                <button class="copy-button" onclick="copyToClipboard(\`${sql}\`)">复制</button>
+                                <strong>SQL count ${statementNumber}:</strong>
+                                <pre>${sql}</pre>
+                                <button class="copy-button" onclick="copyToClipboard(\`${sql}\`)">copy</button>
                               </div>`;
             }
 
             document.getElementById('sqlOutput').innerHTML = sqlOutput;
-        };
+        };count
 
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text).then(() => {
-                alert('SQL 语句已复制到剪贴板');
+                alert('SQL COPY Success');
             }).catch(err => {
-                console.error('复制失败!', err);
+                console.error('COPY Failed!', err);
             });
         }
     </script>
